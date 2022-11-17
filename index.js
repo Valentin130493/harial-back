@@ -16,7 +16,7 @@ app.use('/', router)
 
 const server = app.listen(PORT, async () => {
     try {
-        await mongoose.connect(URL, {
+        await mongoose.connect(`${URL}`, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
