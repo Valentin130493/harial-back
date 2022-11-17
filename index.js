@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 8080
 const app = express()
 
 
-const server = app.listen(PORT, (req, res) => {
-    res.end(`Hello world!`)
+const server = app.listen(PORT, () => {
+
     console.log(`[server]: Server is running at http://localhost:${PORT}`);
 });
