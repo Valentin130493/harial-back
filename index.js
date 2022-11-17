@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-const PORT = 'https://harial.herokuapp.com/'
+const PORT = 8080
 
 
 const app = express()
