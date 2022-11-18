@@ -6,7 +6,7 @@ const router = require('./router/index.js')
 const mongoose = require('mongoose')
 
 const PORT = process.env.PORT || 8080
-const URL = process.env.URL
+const URL = process.env.DATABASE_URL
 
 
 const app = express()
