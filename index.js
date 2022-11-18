@@ -14,6 +14,12 @@ app.use(express.json())
 app.use(bodyParser.json({limit: '50mb'}))
 app.use('/', router)
 
+
+app.get("/hello", (req, res) => {
+    res.status(200).json({
+        message: "work"
+    })
+})
 const server = app.listen(PORT, async () => {
     try {
         await mongoose.connect(`${URL}`, {
