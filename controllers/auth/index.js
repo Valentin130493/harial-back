@@ -28,13 +28,6 @@ const register = async (req, res) => {
             }
         );
 
-        let transporter = nodemailer.createTransport({
-            auth: {
-                user: `${user._doc.fullName}`,
-                pass: 'yourpassword'
-            }
-        });
-
         const {passwordHash, ...userData} = user._doc;
 
 
