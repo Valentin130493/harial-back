@@ -1,60 +1,69 @@
 const DocsModel = require("../../models/Docs");
 const nodemailer = require("nodemailer");
 const {createTable} = require('../../utils/createTable')
+const {login} = require("../auth");
 const EMAIL = process.env.NODEMAILER_EMAIL
 const PASS = process.env.NODEMAILER_PASS
 
 const formData = async (req, res) => {
     try {
-    const formData = req.body
+        const formData = req.body
+        const copyValue = req.body.copy
+        console.log(typeof copyValue)
+        let RandomNumber = Math.floor(Math.random() * 900) + 1000;
 
-    // let RandomNumber = Math.floor(Math.random() * 900) + 1000;
-    //
-    // const doc = new DocsModel({
-    //     number: RandomNumber,
-    //     status: "pending",
-    //     docs: []
-    // });
-    //
-    // const newDoc = doc.save()
-
-    const table = createTable(formData)
-
-    try {
-        let transporter = nodemailer.createTransport({
-            service: "gmail",
-            host: "smtp.gmail.email",
-            port: 465,
-            secure: true, // true for 465, false for other ports
-            auth: {
-                user: `${EMAIL}`, // generated ethereal user
-                pass: `${PASS}`, // generated ethereal password
-            },
+        const doc = new DocsModel({
+            number: RandomNumber,
+            status: "pending",
+            docs: []
         });
-        //
-        // let info = await transporter.sendMail({
-        //     from: `${EMAIL}`, // sender address
-        //     to: `${EMAIL}`, // list of receivers
-        //     subject: "Hello ✔", // Subject line
-        //     text: "Hello world?", // plain text body
-        // });
-        //
-        // let infoWithFormData = await transporter.sendMail({
-        //     from: `${EMAIL}`, // sender address
-        //     to: `${EMAIL}`, // list of receivers
-        //     subject: "Hello ✔", // Subject line
-        //     text: "Hello world?", // plain text body
-        //     html: "<b>Hello world 12312321321</b>" +
-        //         "<h1>test</h1>", // html body
-        // });
-    } catch (err) {
-        console.log(err)
-    }
+
+        const newDoc = await doc.save()
+
+        console.log(newDoc)
+
+        try {
 
 
+            let transporter = nodemailer.createTransport({
+                service: "gmail",
+                host: "smtp.gmail.email",
+                port: 465,
+                secure: true, // true for 465, false for other ports
+                auth: {
+                    user: `${EMAIL}`, // generated ethereal user
+                    pass: `${PASS}`, // generated ethereal password
+                },
+            });
 
 
-        res.status(200).json(req.body)
+            let info = await transporter.sendMail({
+                from: `${EMAIL}`, // sender address
+                to: `${EMAIL}`, // list of receivers
+                subject: "Hello ✔", // Subject line
+                text: "Hello world?", // plain text body
+            });
+
+
+            if (copyValue === "true") {
+
+                const table = createTable(formData)
+                let infoWithFormData = await transporter.sendMail({
+                    from: `${EMAIL}`, // sender address
+                    to: `${EMAIL}`, // list of receivers
+                    subject: "Hello ✔", // Subject line
+                    text: "Hello world?", // plain text body
+                    html: table
+                });
+            }
+
+
+        } catch (err) {
+            console.log(err)
+        }
+
+
+        res.status(200).json(newDoc)
 
     } catch (err) {
         console.log(err)
