@@ -1,9 +1,9 @@
 const DocsModel = require("../../models/Docs");
 
-const changeAppStatus = async (req, res) => {
+const findDoc = async (req, res) => {
 
     try {
-        const doc = await DocsModel.findOneAndUpdate({status: req.body.status})
+        const doc = await DocsModel.find({number: req.body.number})
 
     } catch (err) {
         console.log(err)
@@ -14,5 +14,5 @@ const changeAppStatus = async (req, res) => {
 }
 
 module.exports = {
-    changeAppStatus
+    findDoc
 }
