@@ -3,7 +3,7 @@ const DocsModel = require("../../models/Docs");
 const findDoc = async (req, res) => {
 
     try {
-        const doc = await DocsModel.find({number: req.body.number})
+        const doc = await DocsModel.find({number: req.body})
 
         const {status} = doc
 
