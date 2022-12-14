@@ -1,19 +1,20 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const nodemailer = require('nodemailer')
 const UserModel = require('../../models/User')
 
-const register = async (req, res) => {
+const tempRegister = async (req, res) => {
     try {
         const pwdChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        const pwdLen = 10;
+        const pwdLen = 8;
         let password = Array(pwdLen).fill(pwdChars).map((x) => x[Math.floor(Math.random() * x.length)]).join('');
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
+        const defaultRole = "user"
 
         const doc = new UserModel({
             email: req.body.email,
             passwordHash: hash,
+            role: defaultRole
         });
 
         const user = await doc.save();
@@ -31,7 +32,6 @@ const register = async (req, res) => {
         const {passwordHash, ...userData} = user._doc;
 
 
-
         res.json({
             ...userData,
             token,
@@ -44,6 +44,46 @@ const register = async (req, res) => {
         });
     }
 };
+
+const register = async (req, res) => {
+    const {email, password, role} = req.body
+    try {
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(password, salt);
+        const defaultRole = "user"
+
+        const doc = new UserModel({
+            email: email,
+            passwordHash: hash,
+            role: role === "admin" ? "admin" : defaultRole
+        });
+
+        const user = await doc.save();
+        const token = jwt.sign(
+            {
+                _id: user._id,
+            },
+            process.env.SECRET_KEY,
+            {
+                expiresIn: '30d',
+            }
+        );
+
+        const {passwordHash, ...userData} = user._doc;
+
+
+        res.json({
+            ...userData,
+            token,
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: 'Не удалось зарегистрироваться',
+        });
+    }
+}
 
 const login = async (req, res) => {
     try {
@@ -116,6 +156,7 @@ const resetPassword = async (req, res) => {
 
 module.exports = {
     register,
+    tempRegister,
     login,
     resetPassword
 }
