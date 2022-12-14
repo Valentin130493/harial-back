@@ -12,6 +12,7 @@ router.post('/form', upload.none(), FormController.formData)
 router.get('/doc', FormController.findByNumber)
 
 router.post("/user/register", upload.none(), AuthController.register)
+router.post("/user/login", upload.none(), AuthController.login)
 
 router.post("admin/changeStatus")
 
