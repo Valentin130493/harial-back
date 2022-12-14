@@ -12,7 +12,7 @@ router.get('/doc', FormController.findByNumber)
 
 router.post("admin/changeStatus")
 
-router.post("user/search", UserController.findDoc)
+router.post("/user/search",upload.none(), UserController.findDoc)
 
 
 module.exports = router
