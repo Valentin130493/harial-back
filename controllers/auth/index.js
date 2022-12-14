@@ -29,11 +29,12 @@ const tempRegister = async (req, res) => {
             }
         );
 
-        const {passwordHash, ...userData} = user._doc;
+        const {email, role} = user._doc;
 
 
         res.json({
-            ...userData,
+            email,
+            role,
             token,
         });
 
