@@ -106,12 +106,15 @@ const login = async (req, res) => {
             _id: user._id
         }, process.env.SECRET_KEY, {expiresIn: "30d"})
 
-        const {passwordHash, ...userData} = user._doc
+        const {email, role} = user._doc;
 
-        res.json({
-            ...userData,
-            token
-        })
+
+        res.status(200).json({
+            email,
+            role,
+            token,
+        });
+
     } catch (err) {
         console.log(err)
         res.status(500).json({
@@ -136,7 +139,7 @@ const resetPassword = async (req, res) => {
                 (err) => {
                     console.log(err)
                     res.status(500).json({
-                        message: 'You can"t change your password< try again'
+                        message: 'You can"t change your password, try again'
                     })
                 }
             )
