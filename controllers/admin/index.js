@@ -16,7 +16,18 @@ const changeAppStatus = async (req, res) => {
 }
 
 const uploadsFiles = async (req, res) => {
-    console.log(req.files)
+    const {number} = req.params
+    try {
+        const data = req.files.map((item) => item.path)
+        await DocsModel.findOneAndUpdate({number: number}, {
+            docs: data
+        })
+        res.status(200).json(data)
+    } catch (err) {
+        console.log(err)
+
+    }
+
 }
 
 module.exports = {

@@ -9,12 +9,17 @@ const AdminController = require("../controllers/admin/index.js")
 const UserController = require("../controllers/user/index.js")
 const AuthController = require("../controllers/auth/index.js")
 const StatusController = require("../controllers/status/index.js")
+const {query} = require("express");
 
 
 const storage = multer.diskStorage({
     destination: (_, __, cb) => {
-        const folder = `1287`
-        cb(null, "uploads")
+        const {number} = _.params
+        const path = `uploads/${number}`
+        if (!fs.existsSync(path)) {
+            fs.mkdirSync(path, {recursive: true});
+        }
+        cb(null, path)
     }, filename: (_, file, cb) => {
         cb(null, file.originalname)
     },
@@ -35,8 +40,8 @@ router.post("/user/login", upload.none(), AuthController.login)
 
 router.get("/status", StatusController.getAllStatus)
 
-router.post("/admin/changeStatus",upload.none(), AdminController.changeAppStatus)
-router.post("/admin/upload", uploadFiles.any(), AdminController.uploadsFiles)
+router.post("/admin/changeStatus", upload.none(), AdminController.changeAppStatus)
+router.post("/admin/upload/:number", uploadFiles.any(), AdminController.uploadsFiles)
 
 router.post("/user/search", upload.none(), UserController.findDoc)
 
