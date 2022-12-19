@@ -14,8 +14,8 @@ const app = express()
 app.use(express.json())
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(cors())
+app.use('/uploads', express.static('uploads'))
 app.use('/', router)
-
 
 const server = app.listen(PORT, async () => {
     try {

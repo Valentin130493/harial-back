@@ -5,6 +5,7 @@ const changeAppStatus = async (req, res) => {
     try {
         const doc = await DocsModel.findOneAndUpdate({status: req.body.status})
 
+        res.status(200).send(doc.status)
     } catch (err) {
         console.log(err)
         res.status(500).json({
@@ -13,6 +14,11 @@ const changeAppStatus = async (req, res) => {
     }
 }
 
+const uploadsFiles = async (req, res) => {
+    console.log(req.files)
+}
+
 module.exports = {
-    changeAppStatus
+    changeAppStatus,
+    uploadsFiles
 }
