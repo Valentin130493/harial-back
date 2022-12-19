@@ -35,7 +35,7 @@ router.post("/user/login", upload.none(), AuthController.login)
 
 router.get("/status", StatusController.getAllStatus)
 
-router.post("/admin/changeStatus", AdminController.changeAppStatus)
+router.post("/admin/changeStatus",upload.none(), AdminController.changeAppStatus)
 router.post("/admin/upload", uploadFiles.any(), AdminController.uploadsFiles)
 
 router.post("/user/search", upload.none(), UserController.findDoc)

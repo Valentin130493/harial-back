@@ -1,10 +1,11 @@
 const DocsModel = require("../../models/Docs");
 
 const changeAppStatus = async (req, res) => {
-
+    const {number, status} = req.body
     try {
-        const doc = await DocsModel.findOneAndUpdate({status: req.body.status})
-
+        const doc = await DocsModel.findOneAndUpdate({number: number}, {
+            status: status
+        })
         res.status(200).send(doc.status)
     } catch (err) {
         console.log(err)
