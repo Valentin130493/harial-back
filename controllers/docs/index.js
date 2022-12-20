@@ -43,8 +43,8 @@ const formData = async (req, res) => {
             let info = await transporter.sendMail({
                 from: `${EMAIL}`, // sender address
                 to: `${EMAIL}`, // list of receivers
-                subject: "Hello ✔", // Subject line
-                text: "Hello world?", // plain text body
+                subject: "Xarial", // Subject line
+                text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", // plain text body
             });
 
 
@@ -54,8 +54,8 @@ const formData = async (req, res) => {
                 let infoWithFormData = await transporter.sendMail({
                     from: `${EMAIL}`, // sender address
                     to: `${EMAIL}`, // list of receivers
-                    subject: "Hello ✔", // Subject line
-                    text: "Hello world?", // plain text body
+                    subject: "Xarial", // Subject line
+                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", // plain text body
                     html: table
                 });
             }
