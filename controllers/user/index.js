@@ -6,9 +6,9 @@ const findDoc = async (req, res) => {
         const doc = await ProjectModel.findOne({project_number: Number(req.body.number)})
         console.log(doc)
         if (doc !== null) {
-            const {status, number} = doc
+            const {status, project_number} = doc
             res.status(200).json({
-                status, name: number
+                status, name: project_number
             })
         } else {
             res.status(200).json({
