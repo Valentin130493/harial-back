@@ -19,7 +19,7 @@ const uploadsFiles = async (req, res) => {
     const {number} = req.params
     try {
         const data = req.files.map((item) => item.path)
-        await DocsModel.findOneAndUpdate({project_number: number}, {
+        await ProjectModel.findOneAndUpdate({project_number: number}, {
             docs: data
         })
         res.status(200).json(data)
