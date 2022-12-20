@@ -92,10 +92,8 @@ const findByNumber = async (req, res) => {
     console.log(number)
     try {
         const doc = await ProjectModel.findOne({project_number: number})
-        console.log(doc)
-        res.status(200).json({
-            doc
-        })
+
+        res.status(200).send(doc)
     } catch (err) {
         console.log(err)
         res.status(500).json({
