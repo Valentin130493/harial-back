@@ -1,4 +1,4 @@
-const DocsModel = require("../../models/Docs");
+const DocsModel = require("../../models/Project");
 
 const changeAppStatus = async (req, res) => {
     const {number, status} = req.body

@@ -1,10 +1,10 @@
-const DocsModel = require("../../models/Docs");
+const ProjectModel = require("../../models/Project");
 
 const findDoc = async (req, res) => {
 
     try {
-        const doc = await DocsModel.findOne({number: Number(req.body.number)})
-
+        const doc = await ProjectModel.findOne({project_number: Number(req.body.number)})
+        console.log(doc)
         if (doc !== null) {
             const {status, number} = doc
             res.status(200).json({

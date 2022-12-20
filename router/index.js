@@ -4,7 +4,7 @@ const multer = require('multer')
 const upload = multer()
 const fs = require('fs')
 
-const FormController = require("../controllers/form/index.js")
+const FormController = require("../controllers/docs/index.js")
 const AdminController = require("../controllers/admin/index.js")
 const UserController = require("../controllers/user/index.js")
 const AuthController = require("../controllers/auth/index.js")
@@ -31,19 +31,20 @@ const uploadFiles = multer({
     }
 })
 
-router.post('/form', upload.none(), FormController.formData)
+router.post('/docs', upload.none(), FormController.formData)
 router.get('/doc', FormController.findByNumber)
 
 
 router.post("/user/register", upload.none(), AuthController.register)
 router.post("/user/login", upload.none(), AuthController.login)
+router.post("/user/search", upload.none(), UserController.findDoc)
 
 router.get("/status", StatusController.getAllStatus)
 
 router.post("/admin/changeStatus", upload.none(), AdminController.changeAppStatus)
 router.post("/admin/upload/:number", uploadFiles.any(), AdminController.uploadsFiles)
 
-router.post("/user/search", upload.none(), UserController.findDoc)
+
 
 
 module.exports = router

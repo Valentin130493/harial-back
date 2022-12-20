@@ -1,4 +1,4 @@
-const DocsModel = require("../../models/Docs");
+const ProjectModel = require("../../models/Project");
 const nodemailer = require("nodemailer");
 const {createTable} = require('../../utils/createTable')
 const {login} = require("../auth");
@@ -9,12 +9,15 @@ const formData = async (req, res) => {
     try {
         const formData = req.body
         const copyValue = req.body.copy
-        console.log(typeof copyValue)
-        let RandomNumber = Math.floor(Math.random() * 900) + 1000;
 
-        const doc = new DocsModel({
-            number: RandomNumber,
-            status: "pending",
+        let RandomNumber = Math.floor(Math.random() * 9000) + 100000;
+
+        const doc = new ProjectModel({
+            project_number: RandomNumber,
+            customer_name: req.body.name,
+            customer_company: req.body.company,
+            customer_country: req.body.country,
+            status: "Request Received",
             docs: []
         });
 
@@ -63,19 +66,19 @@ const formData = async (req, res) => {
         }
 
 
-        res.status(200).json(newDoc)
+        res.status(200)
 
     } catch (err) {
         console.log(err)
         res.status(500).json({
-            message: 'Сталася дурня'
+            message: 'Server error'
         })
     }
 }
 
 const findByNumber = async (req, res) => {
     try {
-        const doc = await DocsModel.findOne({number: req.body.number})
+        const doc = await ProjectModel.findOne({project_number: req.body.number})
 
         res.status(200).json({
             doc
@@ -87,7 +90,6 @@ const findByNumber = async (req, res) => {
         })
     }
 }
-
 
 
 module.exports = {
