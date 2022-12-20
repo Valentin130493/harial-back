@@ -4,12 +4,9 @@ const findDoc = async (req, res) => {
 
     try {
         const doc = await ProjectModel.findOne({project_number: Number(req.body.number)})
-        console.log(doc)
+
         if (doc !== null) {
-            const {status, project_number} = doc
-            res.status(200).json({
-                status, name: project_number
-            })
+            res.status(200).json(doc)
         } else {
             res.status(200).json({
                 message: `project number: ${req.body.number} not found`
