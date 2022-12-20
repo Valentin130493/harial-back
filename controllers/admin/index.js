@@ -1,9 +1,9 @@
-const DocsModel = require("../../models/Project");
+const ProjectModel = require("../../models/Project");
 
 const changeAppStatus = async (req, res) => {
     const {number, status} = req.body
     try {
-        const doc = await DocsModel.findOneAndUpdate({number: number}, {
+        const doc = await ProjectModel.findOneAndUpdate({number: number}, {
             status: status
         })
         res.status(200).send(doc.status)
@@ -19,7 +19,7 @@ const uploadsFiles = async (req, res) => {
     const {number} = req.params
     try {
         const data = req.files.map((item) => item.path)
-        await DocsModel.findOneAndUpdate({number: number}, {
+        await DocsModel.findOneAndUpdate({project_number: number}, {
             docs: data
         })
         res.status(200).json(data)
