@@ -75,11 +75,24 @@ const formData = async (req, res) => {
         })
     }
 }
+const getAllProjects = async (req, res) => {
+    try {
+        const docs = await ProjectModel.find()
+        res.status(200).send(docs)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            message: 'Server error'
+        })
+    }
+}
 
 const findByNumber = async (req, res) => {
+    const {number} = req.params
+    console.log(number)
     try {
-        const doc = await ProjectModel.findOne({project_number: req.body.number})
-
+        const doc = await ProjectModel.findOne({project_number: number})
+        console.log(doc)
         res.status(200).json({
             doc
         })
@@ -94,5 +107,6 @@ const findByNumber = async (req, res) => {
 
 module.exports = {
     formData,
-    findByNumber
+    findByNumber,
+    getAllProjects
 }

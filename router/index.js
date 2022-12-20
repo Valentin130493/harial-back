@@ -32,7 +32,8 @@ const uploadFiles = multer({
 })
 
 router.post('/docs', upload.none(), FormController.formData)
-router.get('/doc', FormController.findByNumber)
+router.get('/doc/:number', FormController.findByNumber)
+router.get("/docs", FormController.getAllProjects)
 
 
 router.post("/user/register", upload.none(), AuthController.register)
@@ -43,8 +44,6 @@ router.get("/status", StatusController.getAllStatus)
 
 router.post("/admin/changeStatus", upload.none(), AdminController.changeAppStatus)
 router.post("/admin/upload/:number", uploadFiles.any(), AdminController.uploadsFiles)
-
-
 
 
 module.exports = router
