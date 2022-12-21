@@ -1,7 +1,7 @@
 const ProjectModel = require("../../models/Project");
 
 
-const uploadsFiles = async (req, res) => {
+const updateProject = async (req, res) => {
     const {number} = req.params
 
     try {
@@ -19,5 +19,5 @@ const uploadsFiles = async (req, res) => {
 }
 
 module.exports = {
-    uploadsFiles
+    updateProject
 }
