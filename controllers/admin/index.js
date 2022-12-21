@@ -3,17 +3,18 @@ const fs = require("fs")
 
 const updateProject = async (req, res) => {
     const {number} = req.params
-
     try {
         const data = req.files.map((item) => item.path)
-        const doc = await ProjectModel.findOneAndUpdate({project_number: number}, {
+        console.log(data)
+        const project = await ProjectModel.findOneAndUpdate({project_number: Number(number)}, {
             docs: data,
             status: req.body.status
         })
-        res.status(200).json(doc)
+
+        console.log(project)
+        res.status(200).send(project)
     } catch (err) {
         console.log(err)
-
     }
 
 }
