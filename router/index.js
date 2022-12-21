@@ -44,6 +44,6 @@ router.get("/status", StatusController.getAllStatus)
 
 
 router.put("/admin/project/:number", uploadFiles.any(), AdminController.updateProject)
-
+router.delete("/admin/project/:number", uploadFiles.any(), AdminController.removeFiles)
 
 module.exports = router
