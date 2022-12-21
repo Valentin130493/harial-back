@@ -42,8 +42,8 @@ router.post("/user/search", upload.none(), UserController.findDoc)
 
 router.get("/status", StatusController.getAllStatus)
 
-router.post("/admin/changeStatus", upload.none(), AdminController.changeAppStatus)
-router.post("/admin/upload/:number", uploadFiles.any(), AdminController.uploadsFiles)
+
+router.put("/admin/upload/:number", uploadFiles.any(), AdminController.uploadsFiles)
 
 
 module.exports = router

@@ -1,28 +1,16 @@
 const ProjectModel = require("../../models/Project");
 
-const changeAppStatus = async (req, res) => {
-    const {number, status} = req.body
-    try {
-        const doc = await ProjectModel.findOneAndUpdate({number: number}, {
-            status: status
-        })
-        res.status(200).send(doc.status)
-    } catch (err) {
-        console.log(err)
-        res.status(500).json({
-            massage: "failed"
-        })
-    }
-}
 
 const uploadsFiles = async (req, res) => {
     const {number} = req.params
+
     try {
-        const data = req.files.map((item) => item.path)
-        await ProjectModel.findOneAndUpdate({project_number: number}, {
-            docs: data
+        const data = req.files.map((item) => item.originalname)
+        const doc = await ProjectModel.findOneAndUpdate({project_number: number}, {
+            docs: data,
+            status:req.body.status
         })
-        res.status(200).json(data)
+        res.status(200).json(doc)
     } catch (err) {
         console.log(err)
 
@@ -31,6 +19,5 @@ const uploadsFiles = async (req, res) => {
 }
 
 module.exports = {
-    changeAppStatus,
     uploadsFiles
 }
