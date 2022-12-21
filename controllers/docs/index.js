@@ -91,7 +91,7 @@ const findByNumber = async (req, res) => {
     const {number} = req.params
     console.log(number)
     try {
-        const doc = await ProjectModel.findOne({project_number: number})
+        const doc = await ProjectModel.findOne({project_number: Number(number)})
         console.log(doc)
         res.status(200).send(doc)
     } catch (err) {
