@@ -44,7 +44,7 @@ const formData = async (req, res) => {
                 from: `${EMAIL}`, // sender address
                 to: `${EMAIL}`, // list of receivers
                 subject: "Xarial", // Subject line
-                text: "Lorem ipsum dolor sit amet"
+                text: `Form was submitted from this email address - ${req.body.email}`
             });
 
             await transporter.sendMail({
