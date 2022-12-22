@@ -21,6 +21,9 @@ const ProjectSchema = new mongoose.Schema({
     },
     docs: {
         type: Array,
+    },
+    user_info: {
+        type: String
     }
 
 }, {

@@ -1,7 +1,6 @@
 const ProjectModel = require("../../models/Project");
 const nodemailer = require("nodemailer");
 const {createTable} = require('../../utils/createTable')
-const {login} = require("../auth");
 const EMAIL = process.env.NODEMAILER_EMAIL
 const PASS = process.env.NODEMAILER_PASS
 
@@ -9,7 +8,7 @@ const formData = async (req, res) => {
     try {
         const formData = req.body
         const copyValue = req.body.copy
-
+        const table = createTable(formData)
         let RandomNumber = Math.floor(Math.random() * 9000) + 100000;
 
         const doc = new ProjectModel({
@@ -18,12 +17,11 @@ const formData = async (req, res) => {
             customer_company: req.body.company,
             customer_country: req.body.country,
             status: "Request Received",
-            docs: []
+            docs: [],
+            user_info :table
         });
 
         const newDoc = await doc.save()
-
-        console.log(newDoc)
 
         try {
 
@@ -58,11 +56,10 @@ const formData = async (req, res) => {
             if (copyValue === "true") {
 
                 const table = createTable(formData)
-                let infoWithFormData = await transporter.sendMail({
+                await transporter.sendMail({
                     from: `${EMAIL}`, // sender address
-                    to: `${EMAIL}`, // list of receivers
+                    to: `${req.body.email}`, // list of receivers
                     subject: "Xarial", // Subject line
-                    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum", // plain text body
                     html: table
                 });
             }
@@ -99,7 +96,7 @@ const findByNumber = async (req, res) => {
     console.log(number)
     try {
         const doc = await ProjectModel.findOne({project_number: Number(number)})
-        console.log(doc)
+
         res.status(200).send(doc)
     } catch (err) {
         console.log(err)
