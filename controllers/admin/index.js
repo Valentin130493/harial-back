@@ -8,13 +8,14 @@ const updateProject = async (req, res) => {
         const prev = await ProjectModel.findOne({project_number: Number(number)})
         const data = req.files.map((item) => item.path)
         const newArr = await prev.docs.concat(...data)
+        const projectBefore = await ProjectModel.findOne({project_number: Number(number)})
         await ProjectModel.findOneAndUpdate({project_number: Number(number)}, {
             docs: newArr,
             status: req.body.status
         })
-        const project = await ProjectModel.findOne({project_number: Number(number)})
+        const projectAfter = await ProjectModel.findOne({project_number: Number(number)})
 
-        if (req.body.status !== project.status){
+        if (req.body.status !== projectBefore.status){
             let transporter = nodemailer.createTransport({
                 service: "gmail",
                 host: "smtp.gmail.email",
@@ -29,14 +30,14 @@ const updateProject = async (req, res) => {
 
             await transporter.sendMail({
                 from: `${EMAIL}`, // sender address
-                to: `${project.custumer_email}`, // list of receivers
+                to: `${projectAfter.custumer_email}`, // list of receivers
                 subject: "Xarial", // Subject line
-                text: `Status of your project was changed from ${req.body.status} to ${project.status}`
+                text: `Status of your project was changed from ${req.body.status} to ${projectAfter.status}`
             });
         }
 
 
-        res.status(200).send(project)
+        res.status(200).send(projectAfter)
     } catch (err) {
         console.log(err)
     }
