@@ -1,5 +1,6 @@
 const ProjectModel = require("../../models/Project");
 const fs = require("fs")
+const nodemailer = require("nodemailer");
 
 const updateProject = async (req, res) => {
     const {number} = req.params
@@ -12,6 +13,29 @@ const updateProject = async (req, res) => {
             status: req.body.status
         })
         const project = await ProjectModel.findOne({project_number: Number(number)})
+
+        if (req.body.status !== project.status){
+            let transporter = nodemailer.createTransport({
+                service: "gmail",
+                host: "smtp.gmail.email",
+                port: 465,
+                secure: true, // true for 465, false for other ports
+                auth: {
+                    user: `${EMAIL}`, // generated ethereal user
+                    pass: `${PASS}`, // generated ethereal password
+                },
+            });
+
+
+            await transporter.sendMail({
+                from: `${EMAIL}`, // sender address
+                to: `${project.custumer_email}`, // list of receivers
+                subject: "Xarial", // Subject line
+                text: `Status of your project was changed from ${req.body.status} to ${project.status}`
+            });
+        }
+
+
         res.status(200).send(project)
     } catch (err) {
         console.log(err)

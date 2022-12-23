@@ -9,6 +9,9 @@ const ProjectSchema = new mongoose.Schema({
     customer_name: {
         type: String,
     },
+    customer_email: {
+        type: String,
+    },
     customer_company: {
         type: String,
     },

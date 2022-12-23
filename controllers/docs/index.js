@@ -18,6 +18,7 @@ const formData = async (req, res) => {
             customer_country: req.body.country,
             status: "Request Received",
             docs: [],
+            customer_email: req.body.email,
             user_info :table
         });
 
