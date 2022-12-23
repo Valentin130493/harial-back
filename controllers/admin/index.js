@@ -1,6 +1,9 @@
 const ProjectModel = require("../../models/Project");
 const fs = require("fs")
 const nodemailer = require("nodemailer");
+const EMAIL = process.env.NODEMAILER_EMAIL
+const PASS = process.env.NODEMAILER_PASS
+
 
 const updateProject = async (req, res) => {
     const {number} = req.params
@@ -15,7 +18,9 @@ const updateProject = async (req, res) => {
         })
         const projectAfter = await ProjectModel.findOne({project_number: Number(number)})
 
-        if (req.body.status !== projectBefore.status){
+        if (req.body.status !== projectBefore.status) {
+            const projectAfter = await ProjectModel.findOne({project_number: Number(number)})
+
             let transporter = nodemailer.createTransport({
                 service: "gmail",
                 host: "smtp.gmail.email",
@@ -30,9 +35,9 @@ const updateProject = async (req, res) => {
 
             await transporter.sendMail({
                 from: `${EMAIL}`, // sender address
-                to: `${projectAfter.custumer_email}`, // list of receivers
+                to: `${projectAfter.customer_email}`, // list of receivers
                 subject: "Xarial", // Subject line
-                text: `Status of your project was changed from ${req.body.status} to ${projectAfter.status}`
+                text: `Status of your project was changed to ${projectAfter.status}`
             });
         }
 
