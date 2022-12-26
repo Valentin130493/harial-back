@@ -41,6 +41,7 @@ router.post("/user/login", upload.none(), AuthController.login)
 router.post("/user/search", upload.none(), UserController.findDoc)
 
 router.get("/status", StatusController.getAllStatus)
+router.put("/status", StatusController.updateStatus)
 
 
 router.put("/admin/project/:number", uploadFiles.any(), AdminController.updateProject)
