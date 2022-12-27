@@ -4,12 +4,12 @@ const multer = require('multer')
 const upload = multer()
 const fs = require('fs')
 
-const FormController = require("../controllers/docs/index.js")
+const DocsController = require("../controllers/docs/index.js")
 const AdminController = require("../controllers/admin/index.js")
 const UserController = require("../controllers/user/index.js")
 const AuthController = require("../controllers/auth/index.js")
 const StatusController = require("../controllers/status/index.js")
-const {query} = require("express");
+const FormController = require("../controllers/form/form.js")
 
 
 const storage = multer.diskStorage({
@@ -31,9 +31,9 @@ const uploadFiles = multer({
     }
 })
 
-router.post('/docs', upload.none(), FormController.formData)
-router.get('/doc/:number', FormController.findByNumber)
-router.get("/docs", FormController.getAllProjects)
+router.post('/docs', upload.none(), DocsController.formData)
+router.get('/doc/:number', DocsController.findByNumber)
+router.get("/docs", DocsController.getAllProjects)
 
 
 router.post("/user/register", upload.none(), AuthController.register)
@@ -42,6 +42,9 @@ router.post("/user/search", upload.none(), UserController.findDoc)
 
 router.get("/status", StatusController.getAllStatus)
 router.put("/status", StatusController.updateStatus)
+
+router.get("/form", FormController.getForm)
+router.put("/from", FormController.updateForm)
 
 
 router.put("/admin/project/:number", uploadFiles.any(), AdminController.updateProject)
