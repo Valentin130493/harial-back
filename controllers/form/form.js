@@ -2,12 +2,10 @@ const FormModel = require("../../models/Form.js");
 
 
 const getForm = async (req, res) => {
-    const form = req.body
-    console.log(form)
+    const id = "63ac74bce7b44bf0af24f0dd"
     try {
-        const formData = await new FormModel(form)
-        await formData.save()
-        res.status(200).send(`good for you`)
+        const formData = await FormModel.findById(id)
+        res.status(200).json(formData.form)
 
     } catch (err) {
         console.log(err)
@@ -19,9 +17,15 @@ const getForm = async (req, res) => {
 
 const updateForm = async (req, res) => {
     const form = req.body
-
+    const id = "63ac74bce7b44bf0af24f0dd"
     try {
-
+        await FormModel.findOneAndUpdate({
+            _id: id
+        }, {
+            form: form
+        })
+        const statuses = await FormModel.findById(id)
+        await res.status(200).send(statuses.form)
 
     } catch (err) {
         console.log(err)
