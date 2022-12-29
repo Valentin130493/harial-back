@@ -5,7 +5,7 @@ const getForm = async (req, res) => {
     const id = "63ac74bce7b44bf0af24f0dd"
     try {
         const formData = await FormModel.findById(id)
-        res.status(200).json(formData.form)
+        res.status(200).send(formData.form)
 
     } catch (err) {
         console.log(err)
