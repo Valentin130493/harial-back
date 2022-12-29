@@ -24,8 +24,8 @@ const updateForm = async (req, res) => {
         }, {
             form: form
         })
-        const statuses = await FormModel.findById(id)
-        await res.status(200).send(statuses.form)
+        const formData = await FormModel.findById(id)
+        await res.status(200).send(formData.form)
 
     } catch (err) {
         console.log(err)
