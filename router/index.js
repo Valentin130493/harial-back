@@ -44,7 +44,7 @@ router.get("/status", StatusController.getAllStatus)
 router.put("/status", StatusController.updateStatus)
 
 router.get("/form", FormController.getForm)
-router.put("/from", FormController.updateForm)
+router.put("/form", FormController.updateForm)
 
 
 router.put("/admin/project/:number", uploadFiles.any(), AdminController.updateProject)

@@ -17,6 +17,7 @@ const getForm = async (req, res) => {
 
 const updateForm = async (req, res) => {
     const form = req.body
+    console.log(req.body)
     const id = "63ac74bce7b44bf0af24f0dd"
     try {
         await FormModel.findOneAndUpdate({
