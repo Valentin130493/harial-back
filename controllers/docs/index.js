@@ -54,7 +54,7 @@ const formData = async (req, res) => {
             });
 
 
-            if (copyValue === "true") {
+            if (copyValue === "on") {
 
                 const table = createTable(formData)
                 await transporter.sendMail({

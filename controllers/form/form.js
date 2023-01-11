@@ -17,16 +17,16 @@ const getForm = async (req, res) => {
 
 const updateForm = async (req, res) => {
     const form = req.body
-    console.log(req.body)
     const id = "63ac74bce7b44bf0af24f0dd"
     try {
         await FormModel.findOneAndUpdate({
             _id: id
         }, {
-            form: form
+            form
         })
-        const formData = await FormModel.findById(id)
-        await res.status(200).send(formData.form)
+
+        const fromData = await FormModel.findById(id)
+        res.status(200).send(fromData.form)
 
     } catch (err) {
         console.log(err)
