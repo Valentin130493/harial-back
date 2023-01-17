@@ -10,7 +10,7 @@ const formData = async (req, res) => {
         const copyValue = req.body.copy
         const table = createTable(formData)
         let RandomNumber = Math.floor(Math.random() * 9000) + 100000;
-
+        console.log(formData)
         const doc = new ProjectModel({
             project_number: RandomNumber,
             customer_name: req.body.name,
@@ -19,7 +19,7 @@ const formData = async (req, res) => {
             status: "Request Received",
             docs: [],
             customer_email: req.body.email,
-            user_info :table
+            user_info: table
         });
 
         const newDoc = await doc.save()
@@ -54,7 +54,7 @@ const formData = async (req, res) => {
             });
 
 
-            if (copyValue === "on") {
+            if (copyValue === "true") {
 
                 const table = createTable(formData)
                 await transporter.sendMail({
