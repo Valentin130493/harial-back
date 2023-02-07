@@ -1,8 +1,5 @@
 const Router = require('express').Router
 const router = new Router();
-const multer = require('multer')
-const upload = multer()
-const fs = require('fs')
 
 const DocsController = require("../controllers/docs/index.js")
 const AdminController = require("../controllers/admin/index.js")
@@ -10,26 +7,8 @@ const UserController = require("../controllers/user/index.js")
 const AuthController = require("../controllers/auth/index.js")
 const StatusController = require("../controllers/status/index.js")
 const FormController = require("../controllers/form/form.js")
+const {upload, uploadFiles} = require("../utils/multer")
 
-
-const storage = multer.diskStorage({
-    destination: (_, __, cb) => {
-        const {number} = _.params
-        const path = `uploads/${number}`
-        if (!fs.existsSync(path)) {
-            fs.mkdirSync(path, {recursive: true});
-        }
-        cb(null, path)
-    }, filename: (_, file, cb) => {
-        cb(null, file.originalname)
-    },
-})
-
-const uploadFiles = multer({
-    storage, limits: {
-        fileSize: 1024 * 1024 * 10
-    }
-})
 
 router.post('/docs', upload.none(), DocsController.formData)
 router.get('/doc/:number', DocsController.findByNumber)

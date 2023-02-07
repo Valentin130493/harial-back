@@ -6,9 +6,7 @@ const getForm = async (req, res) => {
     try {
         const formData = await FormModel.findById(id)
         res.status(200).send(formData.form)
-
     } catch (err) {
-        console.log(err)
         res.status(500).json({
             message: `Can't take form fields`
         })
@@ -29,7 +27,6 @@ const updateForm = async (req, res) => {
         res.status(200).send(fromData.form)
 
     } catch (err) {
-        console.log(err)
         res.status(500).json({
             message: `Can't take form fields`
         })

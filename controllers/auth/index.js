@@ -31,7 +31,6 @@ const tempRegister = async (req, res) => {
 
         const {email, role} = user._doc;
 
-
         res.json({
             email,
             role,
@@ -39,9 +38,8 @@ const tempRegister = async (req, res) => {
         });
 
     } catch (err) {
-        console.log(err);
         res.status(500).json({
-            message: 'Не удалось зарегистрироваться',
+            message: 'Something goes wrong',
         });
     }
 };
@@ -79,7 +77,6 @@ const register = async (req, res) => {
         });
 
     } catch (err) {
-        console.log(err);
         res.status(500).json({
             message: 'Не удалось зарегистрироваться',
         });
@@ -116,7 +113,6 @@ const login = async (req, res) => {
         });
 
     } catch (err) {
-        console.log(err)
         res.status(500).json({
             message: 'You can"t login'
         })
@@ -137,7 +133,6 @@ const resetPassword = async (req, res) => {
                 {passwordHash: hash},
                 {new: true},
                 (err) => {
-                    console.log(err)
                     res.status(500).json({
                         message: 'You can"t change your password, try again'
                     })
@@ -150,7 +145,6 @@ const resetPassword = async (req, res) => {
         }
 
     } catch (err) {
-        console.log(err)
         res.status(500).json({
             message: 'You can"t change password'
         })

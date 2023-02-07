@@ -6,18 +6,6 @@ const ProjectSchema = new mongoose.Schema({
         require: true,
         unique: true
     },
-    customer_name: {
-        type: String,
-    },
-    customer_email: {
-        type: String,
-    },
-    customer_company: {
-        type: String,
-    },
-    customer_country: {
-        type: String,
-    },
     status: {
         type: String,
         require: true
