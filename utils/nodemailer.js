@@ -4,10 +4,13 @@ const PASS = process.env.NODEMAILER_PASS
 
 
 let transporter = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.email",
-    port: 465,
-    secure: true, // true for 465, false for other ports
+    service: "Outlook365",
+    host: "smtp.office365.com",
+    port: "587",
+    tls: {
+        ciphers: "SSLv3",
+        rejectUnauthorized: false,
+    },
     auth: {
         user: `${EMAIL}`, // generated ethereal user
         pass: `${PASS}`, // generated ethereal password
